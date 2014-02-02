@@ -24,11 +24,9 @@ OTHER_FILES += qml/currconv.qml \
     qml/pages/MainPage.qml \
     qml/components/CurrencyItem.qml \
     qml/pages/CurrencyPage.qml \
-    qml/pages/RearrangePage.qml \
     qml/webrequest.js \
     qml/components/CountryItem.qml \
     qml/components/CountryItem.qml \
     qml/pages/AmountDialog.qml \
-    qml/dbinit.js \
-    qml/pages/testsite.qml
+    qml/dbinit.js
 

@@ -55,18 +55,6 @@ Page {
     function rearrangeItem(currID, currPos, nextPos){
         currencyModel.move(currPos,nextPos)
     }
-
-    function enableRearrange(){
-        for (var i=0;i<currencyList.count;i++){
-            currencyList[i].enableButtons();
-        }
-    }
-
-    function disableRearrange(){
-        for (var i=0;i<currencyModel.count;i++){
-            currencyModel.get(i).disableButtons();
-        }
-    }
     function disableButtons(){
         upButton.visible=false;
         downButton.visible=false;
@@ -110,7 +98,7 @@ Page {
             }
             MenuItem {
                 text: qsTr("Refresh rates")
-                onClicked: mainPage.refreshRates();
+                onClicked: mainPage.reloadQuotes();
             }
         }
         PushUpMenu {

@@ -100,8 +100,8 @@ Page {
             function remove() {
                 var maxPos = DB.getMaxPos();
                 DB.addCurrency(uid,maxPos+1);
-                currencyModel.remove(index);
                 mainPage.reloadQuotes();
+                currencyModel.remove(index);
                 mainPage.reloadModel();
             }
 

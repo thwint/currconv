@@ -38,7 +38,6 @@ ApplicationWindow
 {
     Component.onCompleted: {
         DB.initialize();
-//        DB.getDisplayCurrencies(false);
         WEB.getQuotes();
     }
 

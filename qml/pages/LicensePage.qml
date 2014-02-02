@@ -39,7 +39,6 @@ Page {
                 anchors {
                     left: parent.left
                     right: parent.right
-                    //margins: Theme.paddingLarge
                     leftMargin: Theme.paddingLarge
                     rightMargin: Theme.paddingLarge
                 }
