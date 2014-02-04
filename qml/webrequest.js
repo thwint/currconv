@@ -17,7 +17,7 @@
  *  with Currency Converter. If not, see http://www.gnu.org/licenses/.
  *****************************************************************************/
 .import "dbconfig.js" as DB
-
+var rateNotifier = Qt.createQmlObject('import QtQuick 2.0; QtObject { signal dataChanged() }', Qt.application, 'rateNotifier');
 /******************************************************************************
  * get quotes from Yahoo
  *****************************************************************************/
@@ -39,21 +39,18 @@ function getQuote(quote){
                             var symbol=response[i].toString().split(",")[0].substring(1,7)
                             var rate=response[i].toString().split(",")[1]
                             DB.storeRate(symbol,rate)
-//                            console.log(symbol+" "+rate)
                         }
                         var now = new Date();
                         var dateTime = Qt.formatDateTime(now,"yyyy-MM-dd hh:mm:ss");
                         DB.storeSetting("lastUpdate",dateTime);
-//                        mainPage.reloadModel();
+                        rateNotifier.dataChanged();
                     } else {
                         console.log("error: " + http.status)
-//                        DB.storeSetting("lastUpdate","Unknown");
                     }
                 }
             }
     http.ontimeout = function() {
         console.log("Request timed out")
-//        DB.storeSetting("lastUpdate","Unknown");
     }
 
     http.send();
@@ -69,7 +66,7 @@ function getQuotes(){
 
     var db = DB.getDatabase();
     db.transaction(function(tx) {
-        var rs = tx.executeSql('SELECT * FROM currencies WHERE available=1 AND position>0 ORDER BY position;');
+        var rs = tx.executeSql('SELECT * FROM currencies WHERE available=1 AND position>=0 ORDER BY position;');
         for (var i = 0; i < rs.rows.length; i++){
             for (var j = 0; j < rs.rows.length; j++){
                 if(rs.rows.item(i).code.localeCompare(rs.rows.item(j).code)){
@@ -83,23 +80,6 @@ function getQuotes(){
             }
         }
     })
-////    var rs = DB.getDisplayCurrencies();
-////    for (var i = 0; i < rs.rows.length; i++){
-//    for (var i=0; i < currencyModel.count;i++){
-////        for (var j = 0; j < rs.rows.length; j++){
-//        for (var j=0;j<currencyModel.count;j++){
-////            if(rs.rows.item(i).code.localeCompare(rs.rows.item(j).code)){
-//            if(currencyModel.get(i).code.localeCompare(currencyModel.get(j).code)){
-//                if(isFirst){
-//                    isFirst=false
-//                } else {
-//                    currConv+=","
-//                }
-//                currConv += currencyModel.get(i).code+currencyModel.get(j).code+"=X"
-////                currConv += rs.rows.item(i).code+rs.rows.item(j).code+"=X"
-//            }
-//        }
-//    }
     console.log(currConv)
     response=getQuote(currConv)
 }

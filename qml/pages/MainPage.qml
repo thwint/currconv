@@ -28,7 +28,9 @@ Page {
     property int amt
     property string fromCurr
     property string lastUpdate
-
+    /**************************************************************************
+     * Add currency element to model
+     *************************************************************************/
     function addCurrency(id,country,currency,code,symbol,available,position){
         currencyModel.append({
                                  "uid": id,
@@ -41,27 +43,23 @@ Page {
                              })
 
     }
-
+    /**************************************************************************
+     * Clear model and reload settings
+     *************************************************************************/
     function reloadModel(){
         currencyModel.clear();
         DB.getDisplayCurrencies();
+        lastUpdate=DB.getSetting("lastUpdate");
     }
-
+    /**************************************************************************
+     * Reload quotes
+     *************************************************************************/
     function reloadQuotes(){
-        console.log("reloadQuotes");
         WEB.getQuotes();
     }
 
-    function rearrangeItem(currID, currPos, nextPos){
-        currencyModel.move(currPos,nextPos)
-    }
-    function disableButtons(){
-        upButton.visible=false;
-        downButton.visible=false;
-        doneButton.visible=false;
-    }
-
     Component.onCompleted: {
+        WEB.rateNotifier.dataChanged.connect(mainPage.reloadModel);
         mainPage.reloadQuotes();
         fromCurr=DB.getSetting("fromCurr");
         lastUpdate = DB.getSetting("lastUpdate");
@@ -72,19 +70,20 @@ Page {
         id: currencyModel
     }
 
-    // To enable PullDownMenu, place our content in a SilicaFlickable
     SilicaListView {
         id: currencyList
         width: mainPage.width
         height: mainPage.height
         anchors.top: parent.top
         model: currencyModel
-        header: PageHeader { title: qsTr("Currency Converter") }
+        header: PageHeader { title: qsTr("Currency Calculator") }
         ViewPlaceholder {
             enabled: currencyList.count == 0
             text: qsTr("Please add a currency")
         }
-        // PullDownMenu and PushUpMenu must be declared in SilicaFlickable, SilicaListView or SilicaGridView
+        /**********************************************************************
+         * Pulldown menu
+         *********************************************************************/
         PullDownMenu {
             MenuItem {
                 text: qsTr("About")
@@ -101,6 +100,9 @@ Page {
                 onClicked: mainPage.reloadQuotes();
             }
         }
+        /**********************************************************************
+         * Pushup menu
+         *********************************************************************/
         PushUpMenu {
             spacing: Theme.paddingLarge
             MenuItem {
@@ -125,24 +127,38 @@ Page {
             property int myIndex: index
             property Item contextMenu
 
+            /******************************************************************
+             * Store new position in database
+             *****************************************************************/
             onMyIndexChanged: {
                 DB.updatePosition(uid,index);
             }
 
             height: menuOpen ? contextMenu.height + contentItem.height : contentItem.height
             width: ListView.view.width
-
+            /******************************************************************
+             * Remove currency from list and hide in database
+             *****************************************************************/
             function remove() {
                 var removal = removalComponent.createObject(currencyList)
                 ListView.remove.connect(removal.deleteAnimation.start)
-                removal.execute(contentItem, "Deleting", function() { DB.hideCurrency(uid); currencyModel.remove(index); } )
+                removal.execute(contentItem, "Deleting", function() {
+                    DB.hideCurrency(uid);
+                    DB.deleteRate(code);
+                    currencyModel.remove(index);
+                } )
             }
+            /******************************************************************
+             * Enable rearrangement buttons
+             *****************************************************************/
             function enableButtons(){
                 upButton.visible=true;
                 downButton.visible=true;
                 doneButton.visible=true;
             }
-
+            /******************************************************************
+             * Move item to new position
+             *****************************************************************/
             function moveItem(nextPos){
                 if (nextPos>=0 && nextPos<currencyList.count){
                     currencyModel.move(index,nextPos,1)
@@ -212,7 +228,10 @@ Page {
                     }
                 }
 
-            }
+            } // end contentItem
+            /******************************************************************
+             * Display animation
+             *****************************************************************/
             Component {
                 id: removalComponent
                 RemorseItem {
@@ -228,6 +247,9 @@ Page {
                     onCanceled: destroy()
                 }
             }
+            /**********************************************************************
+             * Context menu for currency items
+             *********************************************************************/
             Component {
                 id: contextMenuComponent
                 ContextMenu {
@@ -245,7 +267,7 @@ Page {
                         }
                     }
                 }
-            }
-        }
-    }
+            } // end contextMenuComponent
+        } // end currencyListItem
+    } // end currencyList
 }

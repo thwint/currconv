@@ -34,9 +34,10 @@ import Sailfish.Silica 1.0
 CoverBackground {
     Label {
         id: label
+        width: parent.width - 2*Theme.paddingLarge
         anchors.centerIn: parent
-        text: "CurrencyConverter"
+        anchors.horizontalCenter: parent.horizontalCenter
+        wrapMode: Text.WordWrap
+        text: "Currency Calculator 0.1"
     }
 }
-
-

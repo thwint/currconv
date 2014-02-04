@@ -125,7 +125,7 @@ function initCurrencies() {
                     tx.executeSql('INSERT INTO currencies (country,currency,code,symbol,available,position) VALUES(?,?,?,?,?,?)',["Grenada","East Caribbean dollar","XCD",null,1,null]);
                     tx.executeSql('INSERT INTO currencies (country,currency,code,symbol,available,position) VALUES(?,?,?,?,?,?)',["Guatemala","Guatemalan quetzal","GTQ",null,1,null]);
                     tx.executeSql('INSERT INTO currencies (country,currency,code,symbol,available,position) VALUES(?,?,?,?,?,?)',["Guinea","Guinean franc","GNF",null,1,null]);
-                    tx.executeSql('INSERT INTO currencies (country,currency,code,symbol,available,position) VALUES(?,?,?,?,?,?)',["Guinea-Bissau","West African CFA franc","XOF",null,1,null]);
+                    tx.executeSql('INSERT INTO currencies (country,currency,code,symbol,available,position) VALUES(?,?,?,?,?,?)',["Guinea Bissau","West African CFA franc","XOF",null,1,null]);
                     tx.executeSql('INSERT INTO currencies (country,currency,code,symbol,available,position) VALUES(?,?,?,?,?,?)',["Guyana","Guyanese dollar","GYD",null,1,null]);
                     tx.executeSql('INSERT INTO currencies (country,currency,code,symbol,available,position) VALUES(?,?,?,?,?,?)',["Haiti","Haitian gourde","HTG",null,1,null]);
                     tx.executeSql('INSERT INTO currencies (country,currency,code,symbol,available,position) VALUES(?,?,?,?,?,?)',["Honduras","Honduran lempira","HNL",null,1,null]);
@@ -204,7 +204,7 @@ function initCurrencies() {
                     tx.executeSql('INSERT INTO currencies (country,currency,code,symbol,available,position) VALUES(?,?,?,?,?,?)',["Puerto Rico","US dollar","USD",null,0,null]);
                     tx.executeSql('INSERT INTO currencies (country,currency,code,symbol,available,position) VALUES(?,?,?,?,?,?)',["Qatar","Qatari riyal","QAR",null,1,null]);
                     tx.executeSql('INSERT INTO currencies (country,currency,code,symbol,available,position) VALUES(?,?,?,?,?,?)',["Romania","Romanian leu","RON",null,1,null]);
-                    tx.executeSql('INSERT INTO currencies (country,currency,code,symbol,available,position) VALUES(?,?,?,?,?,?)',["Russian_Federation","Russian ruble","RUB",null,1,null]);
+                    tx.executeSql('INSERT INTO currencies (country,currency,code,symbol,available,position) VALUES(?,?,?,?,?,?)',["Russian Federation","Russian ruble","RUB",null,1,null]);
                     tx.executeSql('INSERT INTO currencies (country,currency,code,symbol,available,position) VALUES(?,?,?,?,?,?)',["Rwanda","Rwandan franc","RWF",null,1,null]);
                     tx.executeSql('INSERT INTO currencies (country,currency,code,symbol,available,position) VALUES(?,?,?,?,?,?)',["Saint Helena","Saint Helena pound","SHP",null,1,null]);
                     tx.executeSql('INSERT INTO currencies (country,currency,code,symbol,available,position) VALUES(?,?,?,?,?,?)',["Saint Kitts and Nevis","East Caribbean dollar","XCD",null,1,null]);

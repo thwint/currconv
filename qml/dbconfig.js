@@ -72,7 +72,6 @@ function getSetting(key){
  *****************************************************************************/
 function storeSetting(key,value){
     var db = getDatabase();
-//    console.log("storeSetting: "+key+value);
     db.transaction(function(tx) {
         var rs = tx.executeSql('INSERT OR REPLACE INTO settings VALUES (?,?);',[key,value]);
     })
@@ -92,7 +91,6 @@ function getRate(symbol){
             retVal = 1;
         }
     })
-    console.log("Symbol: "+symbol+" Rate: "+retVal);
     return retVal
 }
 /******************************************************************************
@@ -102,6 +100,15 @@ function storeRate(symbols,rate){
     var db = getDatabase();
     db.transaction(function(tx) {
         var rs = tx.executeSql('INSERT OR REPLACE INTO rates VALUES (?,?);',[symbols,rate]);
+    })
+}
+/******************************************************************************
+ * Delete exchange rates containing one symbol
+ *****************************************************************************/
+function deleteRate(symbol){
+    var db = getDatabase();
+    db.transaction(function(tx) {
+        var rs = tx.executeSql('DELETE FROM rates WHERE symbol LIKE ?;',"%"+symbol+"%");
     })
 }
 /******************************************************************************
@@ -119,7 +126,7 @@ function updatePosition(currID,newPosition){
 function getRemainingCurrencies(){
     var db = getDatabase();
     db.transaction(function(tx) {
-        var rs = tx.executeSql('SELECT * FROM currencies WHERE available=1 AND (position IS NULL OR position<1) ORDER BY country;');
+        var rs = tx.executeSql('SELECT * FROM currencies WHERE available=1 AND (position IS NULL OR position<0) ORDER BY country;');
         for (var i = 0; i < rs.rows.length; i++){
             page.addCurrency(rs.rows.item(i).id,rs.rows.item(i).country,rs.rows.item(i).currency,rs.rows.item(i).code,rs.rows.item(i).symbol,rs.rows.item(i).available,rs.rows.item(i).position)
         }

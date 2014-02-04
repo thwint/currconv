@@ -24,7 +24,9 @@ import "../webrequest.js" as WEB
 
 Page {
     id: page
-
+    /**************************************************************************
+     * Add currency element to model
+     *************************************************************************/
     function addCurrency(id,country,currency,code,symbol,available,position){
         currencyModel.append({
                                  "uid": id,
@@ -41,13 +43,13 @@ Page {
     Component.onCompleted: {
         DB.getRemainingCurrencies(true);
     }
-    Component.onDestruction: {
-
-    }
 
     ListModel {
         id: currencyModel
     }
+    /**************************************************************************
+     * Header for section
+     *************************************************************************/
     Component {
         id: sectionHeading
         Rectangle {
@@ -60,20 +62,16 @@ Page {
             }
         }
     }
-    // To enable PullDownMenu, place our content in a SilicaFlickable
     SilicaListView {
         id: currencyList
         model: currencyModel
-        header: PageHeader { title: qsTr("Currency Converter") }
-//        anchors.fill: parent
+        header: PageHeader { title: qsTr("Currency Calculator") }
         width: page.width
         height: page.height
         anchors.top: parent.top
-
-        ViewPlaceholder {
-            enabled: currencyList.count == 0
-            text: qsTr("Please add a currency")
-        }
+        /**********************************************************************
+         * Pushup menu
+         *********************************************************************/
         PushUpMenu {
             spacing: Theme.paddingLarge
             MenuItem {
@@ -84,19 +82,23 @@ Page {
 
         VerticalScrollDecorator {}
 
+        /**********************************************************************
+          * Grouping countries by first letter
+          *********************************************************************/
         section.property: "letter"
         section.criteria: ViewSection.FullString
         section.delegate: sectionHeading
 
         delegate: Item {
             id: currencyListItem
-            property bool menuOpen: contextMenu != null && contextMenu.parent === currencyListItem
             property int myIndex: index
-            property Item contextMenu
 
-            height: menuOpen ? contextMenu.height + contentItem.height : contentItem.height
+            height: contentItem.height
             width: ListView.view.width
-
+            /******************************************************************
+             * Remove currency from list, set position in database and
+             * reload model
+             *****************************************************************/
             function remove() {
                 var maxPos = DB.getMaxPos();
                 DB.addCurrency(uid,maxPos+1);
@@ -115,6 +117,6 @@ Page {
                     remove();
                 }
             }
-        }
-    }
+        } // end currencyListItem
+    } // end currencyList
 }

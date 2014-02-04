@@ -30,7 +30,7 @@ Page {
                 font.bold: true
                 font.family: Theme.fontFamilyHeading
                 color: Theme.highlightColor
-                text: "Currency converter 0.1"
+                text: "Currency Calculator 0.1"
             }
             Text {
                 id: desc
@@ -50,7 +50,7 @@ Page {
                 title: qsTr("Author")
                 text: "Tom Winterhalder"
                 onClicked: {
-                    openUrlPopup.openUrl("mailto:tom@winterhalder.ch?subject=WIFI Password recovery",qsTr("Starting mail app"))
+                    openUrlPopup.openUrl("mailto:tom@winterhalder.ch?subject=Currency Calculator",qsTr("Starting mail app"))
                 }
             }
             ValueTitleItem{
