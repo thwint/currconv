@@ -28,19 +28,29 @@
   SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-import QtQuick 2.0
-import Sailfish.Silica 1.0
-import "pages"
-import "dbinit.js" as DB
-import "webrequest.js" as WEB
+#include <QtQuick>
+#include <sailfishapp.h>
+#include <QGuiApplication>
 
-ApplicationWindow
+int main(int argc, char *argv[])
 {
-    Component.onCompleted: {
-        DB.initialize();
-        WEB.getQuotes();
-    }
 
-    initialPage: Component { MainPage { } }
-    cover: Qt.resolvedUrl("cover/CoverPage.qml")
+    QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
+    QScopedPointer<QQuickView> view(SailfishApp::createView());
+
+    app->setOrganizationName("wintersoft");
+    app->setOrganizationDomain("wintersoft.ch");
+    app->setApplicationName("harbour-currencycalculator");
+
+    view->setSource(SailfishApp::pathTo("qml/harbour-currencycalculator.qml"));
+    view->rootContext()->setContextProperty("XDG_HOME_DIR", QStandardPaths::writableLocation(QStandardPaths::HomeLocation));
+    view->rootContext()->setContextProperty("XDG_DATA_DIR", QStandardPaths::writableLocation(QStandardPaths::DataLocation));
+    view->rootContext()->setContextProperty("XDG_CONFIG_DIR", QStandardPaths::writableLocation(QStandardPaths::ConfigLocation));
+    view->rootContext()->setContextProperty("XDG_CACHE_DIR", QStandardPaths::writableLocation(QStandardPaths::CacheLocation));
+    view->show();
+
+
+    return app->exec();
+//    return 0;
 }
+

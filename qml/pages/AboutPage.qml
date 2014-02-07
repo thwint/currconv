@@ -7,7 +7,7 @@ Page {
     Image {
         id: logo
         fillMode: Image.PreserveAspectCrop
-        source: "../images/currconv.png"
+        source: "../images/harbour-currencycalculator.png"
         anchors.horizontalCenter: parent.horizontalCenter
         y:150
     }
@@ -30,7 +30,7 @@ Page {
                 font.bold: true
                 font.family: Theme.fontFamilyHeading
                 color: Theme.highlightColor
-                text: "Currency Calculator 0.1"
+                text: "Currency Calculator 0.2"
             }
             Text {
                 id: desc
@@ -65,7 +65,7 @@ Page {
                 title:  qsTr("Project page")
                 text: "Github"
                 onClicked: {
-                    openUrlPopup.openUrl("https://github.com/thwint/currconv")
+                    openUrlPopup.openUrl("https://github.com/thwint/currencycalculator")
                 }
             }
             ValueTitleItem{

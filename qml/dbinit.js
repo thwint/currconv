@@ -34,8 +34,8 @@ function initialize() {
                     tx.executeSql('CREATE TABLE IF NOT EXISTS settings (key TEXT PRIMARY KEY UNIQUE, value TEXT)');
                     var rs  = tx.executeSql("SELECT * FROM currencies");
                     if (rs.rows.length === 0) {
-                        console.log("Currencies table empty - Initializing currencies");
                         initCurrencies();
+                        notify.show("DB initialized",3000);
                     }
                 });
 }

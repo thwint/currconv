@@ -21,7 +21,7 @@
  * get database connection
  */
 function getDatabase() {
-    return LS.LocalStorage.openDatabaseSync("CurrConv", "0.1", "StorageDatabase", 100000);
+    return LS.LocalStorage.openDatabaseSync("CurrCalc", "0.1", "StorageDatabase", 100000);
 }
 /******************************************************************************
  * Get last max position from database
@@ -45,7 +45,6 @@ function getMaxPos(){
  *****************************************************************************/
 function addCurrency(uid,maxPos){
     var db = getDatabase();
-    console.log("uid: "+uid+" maxPos: "+maxPos)
     db.transaction(function(tx) {
         var rs = tx.executeSql('UPDATE currencies SET position=? where id=?',[maxPos,uid]);
     })
@@ -80,15 +79,18 @@ function storeSetting(key,value){
  * get a single rate
  *****************************************************************************/
 function getRate(symbol){
-//    console.log(symbol);
     var db = getDatabase();
     var retVal = "";
     db.transaction(function(tx) {
         var rs = tx.executeSql('SELECT rate FROM rates WHERE symbol=?',[symbol]);
         if (rs.rows.length > 0){
             retVal = rs.rows.item(0).rate;
-        } else {
+        } else if (symbol.substring(0,3).localeCompare(symbol.substring(3))===0){
+            // return 1 if rate is something like USDUSD
             retVal = 1;
+        } else {
+            // in any other case the correct rate is unknown
+            retVal = "Unknown"
         }
     })
     return retVal
@@ -149,7 +151,6 @@ function getDisplayCurrencies(){
  *****************************************************************************/
 function hideCurrency(id){
     var db = getDatabase();
-    console.log(id);
     db.transaction(function(tx) {
         var rs = tx.executeSql('UPDATE currencies SET position=null WHERE id=?;',id);
     })

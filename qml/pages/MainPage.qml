@@ -49,7 +49,9 @@ Page {
     function reloadModel(){
         currencyModel.clear();
         DB.getDisplayCurrencies();
-        lastUpdate=DB.getSetting("lastUpdate");
+        fromCurr=DB.getSetting("fromCurr");
+        lastUpdate = DB.getSetting("lastUpdate");
+        amt=parseInt(DB.getSetting("amount"));
     }
     /**************************************************************************
      * Reload quotes
@@ -60,11 +62,17 @@ Page {
 
     Component.onCompleted: {
         WEB.rateNotifier.dataChanged.connect(mainPage.reloadModel);
-        mainPage.reloadQuotes();
-        fromCurr=DB.getSetting("fromCurr");
-        lastUpdate = DB.getSetting("lastUpdate");
-        amt=parseInt(DB.getSetting("amount"));
+        timeout.start()
         mainPage.reloadModel();
+    }
+    Timer {
+        id: timeout
+        interval: 3000
+
+        onTriggered: {
+            interval = 3000
+            reloadModel();
+        }
     }
     ListModel {
         id: currencyModel
@@ -174,9 +182,9 @@ Page {
                 currName:currency
                 symbol: symbol
                 currAmount: amt*DB.getRate(fromCurr+code)
+                anchors.leftMargin: Theme.paddingSmall
 
                 onPressAndHold: {
-                    console.log("Clicked "+country)
                     if (!contextMenu)
                         contextMenu = contextMenuComponent.createObject(currencyListItem)
                     contextMenu.show(currencyListItem)

@@ -28,24 +28,24 @@
   SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifdef QT_QML_DEBUG
-#include <QtQuick>
-#endif
+import QtQuick 2.0
+import Sailfish.Silica 1.0
+import "pages"
+import "components"
+import "dbinit.js" as DB
+import "webrequest.js" as WEB
 
-#include <sailfishapp.h>
-
-
-int main(int argc, char *argv[])
+ApplicationWindow
 {
-    // SailfishApp::main() will display "qml/template.qml", if you need more
-    // control over initialization, you can use:
-    //
-    //   - SailfishApp::application(int, char *[]) to get the QGuiApplication *
-    //   - SailfishApp::createView() to get a new QQuickView * instance
-    //   - SailfishApp::pathTo(QString) to get a QUrl to a resource file
-    //
-    // To display the view, call "show()" (will show fullscreen on device).
+    Component.onCompleted: {
+        DB.initialize();
+        WEB.getQuotes();
+    }
 
-    return SailfishApp::main(argc, argv);
+    NotifyBanner { id: notify }
+
+    initialPage: Component { MainPage { } }
+    cover: Qt.resolvedUrl("cover/CoverPage.qml")
 }
+
 

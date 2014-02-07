@@ -55,6 +55,7 @@ BackgroundItem {
         Image {
             fillMode: Image.PreserveAspectCrop
             source: "../images/"+replaceSpace(country)+".png"
+            anchors.leftMargin: Theme.paddingSmall
         }}
     Label {
         id: currName

@@ -6,27 +6,27 @@
 #         - desktop icon filename must be changed
 #         - desktop filename must be changed
 #         - icon definition filename in desktop file must be changed
-TARGET = currconv
+TARGET = harbour-currencycalculator
 
 CONFIG += sailfishapp
 
-SOURCES += src/currconv.cpp
+SOURCES += src/harbour-currencycalculator.cpp
 
-OTHER_FILES += qml/currconv.qml \
+OTHER_FILES += qml/harbour-currencycalculator.qml \
     qml/cover/CoverPage.qml \
-    rpm/currconv.spec \
-    rpm/currconv.yaml \
-    currconv.desktop \
-    qml/pages/LicensePage.qml \
-    qml/pages/AboutPage.qml \
-    qml/components/ValueTitleItem.qml \
-    qml/dbconfig.js \
+    rpm/harbour-currencycalculator.spec \
+    rpm/harbour-currencycalculator.yaml \
+    harbour-currencycalculator.desktop \
     qml/pages/MainPage.qml \
-    qml/components/CurrencyItem.qml \
+    qml/pages/LicensePage.qml \
     qml/pages/CurrencyPage.qml \
-    qml/webrequest.js \
-    qml/components/CountryItem.qml \
-    qml/components/CountryItem.qml \
     qml/pages/AmountDialog.qml \
-    qml/dbinit.js
+    qml/pages/AboutPage.qml \
+    qml/webrequest.js \
+    qml/dbinit.js \
+    qml/dbconfig.js \
+    qml/components/ValueTitleItem.qml \
+    qml/components/CurrencyItem.qml \
+    qml/components/CountryItem.qml \
+    qml/components/NotifyBanner.qml
 

@@ -32,12 +32,19 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 CoverBackground {
+    Image {
+        id: logo
+        fillMode: Image.PreserveAspectCrop
+        source: "../images/harbour-currencycalculator.png"
+        anchors.horizontalCenter: parent.horizontalCenter
+        y:50
+    }
     Label {
         id: label
         width: parent.width - 2*Theme.paddingLarge
         anchors.centerIn: parent
         anchors.horizontalCenter: parent.horizontalCenter
         wrapMode: Text.WordWrap
-        text: "Currency Calculator 0.1"
+        text: "Currency Calculator 0.2"
     }
 }

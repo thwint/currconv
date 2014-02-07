@@ -24,6 +24,7 @@ import "../webrequest.js" as WEB
 
 Page {
     id: page
+    property string searchString
     /**************************************************************************
      * Add currency element to model
      *************************************************************************/
@@ -47,6 +48,28 @@ Page {
     ListModel {
         id: currencyModel
     }
+
+    Column {
+        id: headerContainer
+
+        width: page.width
+
+        PageHeader {
+            title: qsTr("Currency Calculator")
+        }
+
+        SearchField {
+            id: searchField
+            width: parent.width
+
+            Binding {
+                target: page
+                property: "searchString"
+                value: searchField.text.toLowerCase().trim()
+            }
+        }
+    }
+
     /**************************************************************************
      * Header for section
      *************************************************************************/
@@ -54,18 +77,29 @@ Page {
         id: sectionHeading
         Rectangle {
             width: page.width
-            height: childrenRect.height
+//            height: childrenRect.height
+            height:0
             color: Theme.highlightColor
+            anchors.leftMargin: Theme.paddingSmall
+            visible: false
             Text {
                 text: section
                 font.bold: true
+                visible:false
             }
         }
     }
     SilicaListView {
         id: currencyList
         model: currencyModel
-        header: PageHeader { title: qsTr("Currency Calculator") }
+        header: Item {
+            id: header
+            width: headerContainer.width
+            height: headerContainer.height
+            Component.onCompleted: headerContainer.parent = header
+        }
+
+//        header: PageHeader { title: qsTr("Currency Calculator") }
         width: page.width
         height: page.height
         anchors.top: parent.top
@@ -85,15 +119,17 @@ Page {
         /**********************************************************************
           * Grouping countries by first letter
           *********************************************************************/
-        section.property: "letter"
-        section.criteria: ViewSection.FullString
-        section.delegate: sectionHeading
-
+        section {
+            property: "letter"
+            criteria: ViewSection.FullString
+            delegate: sectionHeading
+        }
         delegate: Item {
             id: currencyListItem
             property int myIndex: index
 
-            height: contentItem.height
+
+            height: contentItem.visible ? contentItem.height : 0
             width: ListView.view.width
             /******************************************************************
              * Remove currency from list, set position in database and
@@ -107,13 +143,24 @@ Page {
                 mainPage.reloadModel();
             }
 
+            function containString(compareString){
+                if (searchString.length>0){
+                    return compareString.toLowerCase().indexOf(searchString) !== -1
+                } else {
+                    return true
+                }
+            }
+
             CountryItem {
                 id: contentItem
                 width: parent.width
                 countryName: country
+                anchors.leftMargin: Theme.paddingSmall
+
+                visible: containString(countryName)
 
                 onClicked: {
-                    console.log("Clicked "+country)
+                    searchField.text =""
                     remove();
                 }
             }
