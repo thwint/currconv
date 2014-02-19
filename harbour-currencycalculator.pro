@@ -28,5 +28,6 @@ OTHER_FILES += qml/harbour-currencycalculator.qml \
     qml/components/ValueTitleItem.qml \
     qml/components/CurrencyItem.qml \
     qml/components/CountryItem.qml \
-    qml/components/NotifyBanner.qml
+    qml/components/NotifyBanner.qml \
+    qml/components/CoverItem.qml
 

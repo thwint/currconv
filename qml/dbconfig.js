@@ -147,6 +147,19 @@ function getDisplayCurrencies(){
     })
 }
 /******************************************************************************
+ * select first three currencies that are available (enabled) and have a
+ * position. Only used for coverPage
+ *****************************************************************************/
+function getTopThreeCurrencies(){
+    var db = getDatabase();
+    db.transaction(function(tx) {
+        var rs = tx.executeSql('SELECT * FROM currencies WHERE available=1 AND position>=0 and position < 3 ORDER BY position;');
+        for (var i = 0; i < rs.rows.length; i++){
+            coverPage.addCurrency(rs.rows.item(i).id,rs.rows.item(i).country,rs.rows.item(i).currency,rs.rows.item(i).code,rs.rows.item(i).symbol,rs.rows.item(i).available,rs.rows.item(i).position)
+        }
+    })
+}
+/******************************************************************************
  * remove a currency from selected list
  *****************************************************************************/
 function hideCurrency(id){

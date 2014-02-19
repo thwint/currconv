@@ -143,9 +143,13 @@ Page {
                 mainPage.reloadModel();
             }
 
-            function containString(compareString){
+            function containString(countryName,currency,code){
+                var retVal = false;
                 if (searchString.length>0){
-                    return compareString.toLowerCase().indexOf(searchString) !== -1
+                    retVal = retVal || countryName.toLowerCase().indexOf(searchString) !== -1;
+                    retVal = retVal || currency.toLowerCase().indexOf(searchString) !== -1;
+                    retVal = retVal || code.toLowerCase().indexOf(searchString) !== -1;
+                    return retVal;
                 } else {
                     return true
                 }
@@ -157,7 +161,7 @@ Page {
                 countryName: country
                 anchors.leftMargin: Theme.paddingSmall
 
-                visible: containString(countryName)
+                visible: containString(countryName, currency, code)
 
                 onClicked: {
                     searchField.text =""

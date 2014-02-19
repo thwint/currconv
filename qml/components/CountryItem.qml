@@ -1,7 +1,7 @@
-/*
+/******************************************************************************
  *  Copyright 2014 Tom Winterhalder
  *
- *  This file is part of Currency Converter.
+ *  This file is part of Currency Calculator.
  *
  *  Currency Converter is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by the
@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License along
  *  with Currency Converter. If not, see http://www.gnu.org/licenses/.
- */
+ *****************************************************************************/
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 

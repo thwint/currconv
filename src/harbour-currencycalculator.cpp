@@ -38,8 +38,8 @@ int main(int argc, char *argv[])
     QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
     QScopedPointer<QQuickView> view(SailfishApp::createView());
 
-    app->setOrganizationName("wintersoft");
-    app->setOrganizationDomain("wintersoft.ch");
+    app->setOrganizationName("harbour-currencycalculator");
+    app->setOrganizationDomain("harbour-currencycalculator");
     app->setApplicationName("harbour-currencycalculator");
 
     view->setSource(SailfishApp::pathTo("qml/harbour-currencycalculator.qml"));

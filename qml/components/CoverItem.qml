@@ -1,7 +1,7 @@
 /******************************************************************************
  *  Copyright 2014 Tom Winterhalder
  *
- *  This file is part of Currency Converter.
+ *  This file is part of Currency Calculator.
  *
  *  Currency Converter is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by the
@@ -18,28 +18,33 @@
  *****************************************************************************/
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import "../dbconfig.js" as DB
 
-Dialog {
-    canAccept:amountField.text.length>0
-    DialogHeader {
-        acceptText: qsTr("Accept")
+BackgroundItem {
+    id: background
+    width: parent.width
+    height: 60
+    property int currID
+    property alias currCode: currCode.text
+    property alias currAmount: amount.text
+
+    anchors{
+        left: parent.left
     }
-        property string amount
-    TextField {
-        id: amountField
-        width: 480
-        y:100
-        inputMethodHints: Qt.ImhFormattedNumbersOnly
-        placeholderText: qsTr("Amount")
-        focus: true
-
-        validator: DoubleValidator { bottom:0.0;}
+    Label {
+        id: currCode
+        color: background.highlighted ? Theme.highlightColor : Theme.primaryColor
+        font.pixelSize: Theme.fontSizeExtraSmall
+        anchors{
+            leftMargin: Theme.paddingSmall
+        }
     }
-
-    onDone: {
-        if (result === DialogResult.Accepted)
-        amount = amountField.text
-        DB.storeSetting('amount',amountField.text)
+    Label {
+        id: amount
+        color: background.highlighted ? Theme.secondaryHighlightColor : Theme.secondaryColor
+        font.pixelSize: Theme.fontSizeExtraSmall
+        anchors{
+            left: currCode.right
+            leftMargin: Theme.paddingSmall
+        }
     }
 }
