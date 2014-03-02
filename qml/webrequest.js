@@ -45,12 +45,12 @@ function getQuote(quote){
                         DB.storeSetting("lastUpdate",dateTime);
                         rateNotifier.dataChanged();
                     } else {
-                        notify.show("Error downloading quotes "+http.status,3000)
+                        notify.show(qsTr("Error downloading quotes ")+http.status,3000)
                     }
                 }
             }
     http.ontimeout = function() {
-        notify.show("Request timed out",3000)
+        notify.show(qsTr("Request timed out"),3000)
     }
 
     http.send();

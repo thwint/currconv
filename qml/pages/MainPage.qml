@@ -24,7 +24,6 @@ import "../webrequest.js" as WEB
 
 Page {
     id: mainPage
-
     property double amt
     property string fromCurr
     property string lastUpdate
@@ -58,6 +57,10 @@ Page {
      *************************************************************************/
     function reloadQuotes(){
         WEB.getQuotes();
+    }
+
+    onStatusChanged: {
+        reloadModel();
     }
 
     Component.onCompleted: {
@@ -172,10 +175,6 @@ Page {
                     currencyModel.move(index,nextPos,1)
                 }
             }
-            function createFloat(floatNumber){
-                floatNumber.indexOf(',') !== -1;
-
-            }
 
             CurrencyItem {
                 id: contentItem
@@ -183,7 +182,7 @@ Page {
                 currID: uid
                 countryName: country
                 currCode: code
-                currName:currency
+                currName:qsTr(currency)
                 symbol: symbol
                 currAmount: amt*DB.getRate(fromCurr+code)
                 anchors.leftMargin: Theme.paddingSmall
@@ -196,14 +195,7 @@ Page {
                 onClicked: {
                     var dialog = pageStack.push("AmountDialog.qml", {"amount": amt})
                     dialog.accepted.connect(function() {
-//                        var german = Qt.locale("de_DE");
-//                        var d
-//                        d = Number.fromLocaleString(Qt.locale(),dialog.amount)
-//                        console.log("Number: "+d)
-//                        console.log(Qt.locale().name)
-                        text: qsTr("Date %1").arg(Date().toLocaleString(Qt.locale()))
-                        amt = parseFloat(dialog.amount)
-//                        amt = parseFloat(d)
+                        amt = dialog.amount
                         if (amt>0){
                             mainPage.fromCurr = currCode
                             DB.storeSetting("fromCurr",currCode)

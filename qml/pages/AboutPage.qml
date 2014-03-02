@@ -30,7 +30,7 @@ Page {
                 font.bold: true
                 font.family: Theme.fontFamilyHeading
                 color: Theme.highlightColor
-                text: "Currency Calculator 0.2"
+                text: "Currency Calculator 0.3"
             }
             Text {
                 id: desc
@@ -66,6 +66,13 @@ Page {
                 text: "Github"
                 onClicked: {
                     openUrlPopup.openUrl("https://github.com/thwint/currencycalculator")
+                }
+            }
+            ValueTitleItem{
+                title:  qsTr("Translation page")
+                text: "Transifex"
+                onClicked: {
+                    openUrlPopup.openUrl("https://www.transifex.com/projects/p/currency-calculator/")
                 }
             }
             ValueTitleItem{

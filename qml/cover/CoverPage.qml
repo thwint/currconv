@@ -51,13 +51,15 @@ CoverBackground {
         DB.getTopThreeCurrencies();
         fromCurr=DB.getSetting("fromCurr");
         lastUpdate = DB.getSetting("lastUpdate");
-        amt=parseFloat(DB.getSetting("amount"));
+        amt=DB.getSetting("amount");
     }
     function reloadQuotes(){
         WEB.getQuotes();
         reloadModel();
     }
-
+    onStatusChanged: {
+        reloadModel();
+    }
     Component.onCompleted: {
         WEB.rateNotifier.dataChanged.connect(coverPage.reloadModel);
         coverPage.reloadModel();

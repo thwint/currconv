@@ -158,7 +158,7 @@ Page {
             CountryItem {
                 id: contentItem
                 width: parent.width
-                countryName: country
+                countryName: qsTr(country)
                 anchors.leftMargin: Theme.paddingSmall
 
                 visible: containString(countryName, currency, code)

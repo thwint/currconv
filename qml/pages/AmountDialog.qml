@@ -38,8 +38,11 @@ Dialog {
     }
 
     onDone: {
-        if (result === DialogResult.Accepted)
-        amount = amountField.text
-        DB.storeSetting('amount',amountField.text)
+        if (result === DialogResult.Accepted){
+            var d
+            d = Number.fromLocaleString(Qt.locale(),amountField.text)
+            amount = parseFloat(d)
+            DB.storeSetting('amount',d)
+        }
     }
 }

@@ -31,6 +31,8 @@
 #include <QtQuick>
 #include <sailfishapp.h>
 #include <QGuiApplication>
+#include <QLocale>
+#include <QTranslator>
 
 int main(int argc, char *argv[])
 {
@@ -39,8 +41,13 @@ int main(int argc, char *argv[])
     QScopedPointer<QQuickView> view(SailfishApp::createView());
 
     app->setOrganizationName("harbour-currencycalculator");
-    app->setOrganizationDomain("harbour-currencycalculator");
+    app->setOrganizationDomain("winterhalder.ch");
     app->setApplicationName("harbour-currencycalculator");
+
+    QString locale = QLocale::system().name();
+    QTranslator translator;
+    translator.load(locale, SailfishApp::pathTo(QString("translations")).toLocalFile());
+    app->installTranslator(&translator);
 
     view->setSource(SailfishApp::pathTo("qml/harbour-currencycalculator.qml"));
     view->rootContext()->setContextProperty("XDG_HOME_DIR", QStandardPaths::writableLocation(QStandardPaths::HomeLocation));
@@ -48,7 +55,6 @@ int main(int argc, char *argv[])
     view->rootContext()->setContextProperty("XDG_CONFIG_DIR", QStandardPaths::writableLocation(QStandardPaths::ConfigLocation));
     view->rootContext()->setContextProperty("XDG_CACHE_DIR", QStandardPaths::writableLocation(QStandardPaths::CacheLocation));
     view->show();
-
 
     return app->exec();
 //    return 0;
