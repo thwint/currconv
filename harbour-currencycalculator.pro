@@ -12,6 +12,25 @@ CONFIG += sailfishapp
 
 SOURCES += src/harbour-currencycalculator.cpp
 
+lupdate_only{
+SOURCES = *.qml \
+          *.js \
+          qml/*.qml \
+          qml/pages/*.qml \
+          qml/components/*.qml \
+          qml/cover/*.qml \
+          qml/*.js
+}
+
+TRANSLATIONS = translations/en.ts \
+               translations/de_DE.ts \
+               translations/de_CH.ts
+
+i18n.files = $$replace(TRANSLATIONS, .ts, .qm)
+i18n.path = /usr/share/$$TARGET/translations
+
+INSTALLS += i18n
+
 OTHER_FILES += qml/harbour-currencycalculator.qml \
     qml/cover/CoverPage.qml \
     rpm/harbour-currencycalculator.spec \
@@ -29,5 +48,9 @@ OTHER_FILES += qml/harbour-currencycalculator.qml \
     qml/components/CurrencyItem.qml \
     qml/components/CountryItem.qml \
     qml/components/NotifyBanner.qml \
-    qml/components/CoverItem.qml
+    qml/components/CoverItem.qml \
+    translations/en.ts \
+    translations/de.ts \
+    translations/de_DE.ts \
+    translations/de_CH.ts
 

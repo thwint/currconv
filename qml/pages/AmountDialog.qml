@@ -25,7 +25,8 @@ Dialog {
     DialogHeader {
         acceptText: qsTr("Accept")
     }
-        property string amount
+    property double amount
+    property string currCode
     TextField {
         id: amountField
         width: 480
@@ -43,6 +44,7 @@ Dialog {
             d = Number.fromLocaleString(Qt.locale(),amountField.text)
             amount = parseFloat(d)
             DB.storeSetting('amount',d)
+            DB.storeSetting('fromCurr',currCode)
         }
     }
 }

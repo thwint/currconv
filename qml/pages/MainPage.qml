@@ -193,13 +193,9 @@ Page {
                     contextMenu.show(currencyListItem)
                 }
                 onClicked: {
-                    var dialog = pageStack.push("AmountDialog.qml", {"amount": amt})
-                    dialog.accepted.connect(function() {
+                    var dialog = pageStack.push("AmountDialog.qml", {"amount": amt, "currCode":currCode});
+                    dialog.accepted.connect(function(){
                         amt = dialog.amount
-                        if (amt>0){
-                            mainPage.fromCurr = currCode
-                            DB.storeSetting("fromCurr",currCode)
-                        }
                     })
                 }
                 IconButton {
